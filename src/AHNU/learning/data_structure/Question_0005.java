@@ -15,5 +15,27 @@ public class Question_0005 {
 
     }
 
+    public static String longestPalindrome(String s) {
+        int n = s.length();
+        boolean[][] dp = new boolean[n][n];
+        String ans = "";
+        for (int le = 0; le < n; ++le) {
+            for (int i = 0; i + le < n; ++i) {
+                int j = i + le;
+                if (le == 0) {
+                    dp[i][j] = true;
+                } else if (le == 1) {
+                    dp[i][j] = (s.charAt(i) == s.charAt(j));
+                } else {
+                    dp[i][j] = (s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1]);
+                }
+                if (dp[i][j] && le + 1 > ans.length()) {
+                    ans = s.substring(i, i + le + 1);
+                }
+            }
+        }
+        return ans;
+    }
+
 
 }
