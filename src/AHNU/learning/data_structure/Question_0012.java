@@ -1,11 +1,14 @@
 package AHNU.learning.data_structure;
 
 /*
-给你 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0) 。
-找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，
+使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
+
+注意：答案中不可以包含重复的三元组。
 
 来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/container-with-most-water
+链接：https://leetcode-cn.com/problems/3sum
+
 */
 
 
