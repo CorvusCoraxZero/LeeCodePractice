@@ -48,7 +48,22 @@ public class Question_0012 {
                 map.put(nums[i], i);
             }
         }
-
         return list;
+    }
+
+    //采用排序+双指针的方法即可避免了重复的同时保证了时间复杂度
+    public List<List<Integer>> ThreeSum2(int[] nums) {
+
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (i != 0 || nums[i] != nums[i - 1]) { // 排序后 下一个数和前一个数不相等 才进入循环
+                for (int j = i + 1; j < nums.length; j++) {
+
+                }
+            }
+
+
+        }
+        return null;
     }
 }
