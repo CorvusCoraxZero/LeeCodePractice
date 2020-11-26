@@ -12,7 +12,9 @@ package AHNU.learning.data_structure;
     链接：https://leetcode-cn.com/problems/merge-k-sorted-lists
 */
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class Question_0023 {
 
@@ -25,7 +27,7 @@ public class Question_0023 {
         Util.printListNode(q.mergeKLists(lists));
     }
 
-    // 递归分治法
+    // 递归分治法 击败100% 比有优先队列快
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists.length == 0) return null;
         if (lists.length == 1) return lists[0];
@@ -75,6 +77,41 @@ public class Question_0023 {
                 return head;
             }
         }
+    }
+
+
+    // 优先队列的解法
+    public ListNode mergeKLists2(ListNode[] lists) {
+
+        if (lists.length == 0) {
+            return null;
+        }
+
+        ListNode dummyHead = new ListNode(0);
+        ListNode curr = dummyHead;
+        PriorityQueue<ListNode> pq = new PriorityQueue<>(new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode o1, ListNode o2) {
+                return o1.val - o2.val;
+            }
+        });
+
+        for (ListNode list : lists) {
+            if (list == null) {
+                continue;
+            }
+            pq.add(list);
+        }
+
+        while (!pq.isEmpty()) {
+            ListNode nextNode = pq.poll();
+            curr.next = nextNode;
+            curr = curr.next;
+            if (nextNode.next != null) {
+                pq.add(nextNode.next);
+            }
+        }
+        return dummyHead.next;
     }
 
 }
