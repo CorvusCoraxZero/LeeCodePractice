@@ -51,7 +51,7 @@ public class Question_0021 {
                 break;
             }
         }
-        ListNode index = q.mergeTwoLists(null,heads);
+        ListNode index = q.mergeTwoLists(headf,heads);
         while (true){
             System.out.println(index.val);
             if (index.next == null) break;
