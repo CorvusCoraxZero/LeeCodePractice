@@ -51,7 +51,7 @@ public class Question_0021 {
                 break;
             }
         }
-        ListNode index = q.mergeTwoLists(headf,heads);
+        ListNode index = q.mergeTwoLists(null,heads);
         while (true){
             System.out.println(index.val);
             if (index.next == null) break;
@@ -59,35 +59,39 @@ public class Question_0021 {
         }
     }
 
-    // 使用栈 遇见相对的括号就弹出 不相对的就压入 结束时如果为空则为真  可能为了省事用了ArrayList 效率慢了点 改成数组下标来做应该效率更高
+    //  常规的合并链表操作改进 不使用新的链表 一个为空直接移动指针
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if (l1 == null && l2 == null) return null;
-        ListNode result = new ListNode(),index = result,pro=index;
+        else if (l1 == null) return l2;
+        else if (l2 == null) return l1;
+        ListNode head,index;
+        if (l1.val > l2.val){
+            head = l2;
+            l2 = l2.next;
+        }else{
+            head = l1;
+            l1 = l1.next;
+        }
+        index = head;
         while (true){
             if (l1 != null && l2 != null){
                 if (l1.val > l2.val){
-                    index.val = l2.val;
+                    index.next = l2;
                     l2 = l2.next;
+                    index = index.next;
                 }else {
-                    index.val = l1.val;
+                    index.next = l1;
                     l1 = l1.next;
+                    index = index.next;
                 }
             }
-            else if (l1 == null && l2== null){
-                pro.next = null;
-                return result;
-            }else if (l1 == null){
-                index.val = l2.val;
-                l2 = l2.next;
+           else if (l1 == null){
+                index.next = l2;
+                return head;
             }else if (l2 == null){
-                index.val = l1.val;
-                l1 = l1.next;
+                index.next = l1;
+                return head;
             }
-            index.next = new ListNode();
-            pro = index;
-            index = index.next;
-
-
         }
     }
 
