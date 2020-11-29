@@ -22,6 +22,8 @@ public class Question_0032 {
 
     public static void main(String[] args) {
         Question_0032 q = new Question_0032();
+        String str = "()(())";
+        System.out.println(q.longestValidParentheses(str));
 
     }
 
@@ -45,7 +47,25 @@ public class Question_0032 {
     来源：力扣（LeetCode）
     */
     public int longestValidParentheses(String s) {
-
+        int[] dp = new int[s.length() + 1];
+        dp[0] = 0;
+        int maxlength = dp[0];
+        for (int i = 0; i < s.length(); i++) {
+            try{ // 会存在连续的))))))往回找的时候数组下标越界
+                if (i != 0 && s.charAt(i) == ')' && s.charAt(i - 1) == '(' ) {
+                    dp[i + 1] = dp[i - 1] + 2;
+                } else if (i != 0 && s.charAt(i) == ')' && s.charAt(i - dp[i] - 1) == '(' && s.charAt(i - 1) == ')') {
+                    dp[i + 1] = dp[i] + dp[i - dp[i] - 1] + 2;
+                }
+                if (dp[i + 1] > maxlength) {
+                    maxlength = dp[i + 1];
+                }
+            }catch (Exception e){
+                System.out.println("Something wrong");
+                dp[i + 1] = 0;
+            }
+        }
+        return maxlength;
     }
 
 }
