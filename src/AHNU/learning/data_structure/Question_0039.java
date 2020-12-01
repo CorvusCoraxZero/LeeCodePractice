@@ -30,7 +30,7 @@ public class Question_0039 {
         }
     }
 
-    //使用 回溯算法+剪枝解决 问题  (答案和思路正确 速度却只有24.68% 也没用递归 想一想优化的方法)
+    //使用 回溯算法+剪枝解决 问题  (答案和思路正确 速度却只有24.68% 也没用递归 想一想优化的方法 提升速度)
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         ArrayList<Integer> index = new ArrayList<>(); // index[i] 表示第i层现在遍历到的位置
         List<List<Integer>> resultList = new ArrayList<>(); // index[i] 表示第i层现在遍历到的位置
