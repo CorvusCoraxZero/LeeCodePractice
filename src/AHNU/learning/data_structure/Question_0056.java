@@ -48,7 +48,7 @@ public class Question_0056 {
             } else {
                 list.add(new int[]{head, tail});
                 head = intervals[i][0];
-                tail = intervals[i][1]
+                tail = intervals[i][1];
             }
         }
         list.add(new int[]{head, tail});
