@@ -25,9 +25,13 @@ public class Question_0056 {
     public static void main(String[] args) {
         Question_0056 q = new Question_0056();
 
-        int[][] intervals = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
-        for (int[] interval : intervals) {
-
+        int[][] intervals = {{2,3},{4,5},{6,7},{8,9},{1,10}};
+        int[][] merge = q.merge(intervals);
+        for (int[] interval : merge) {
+            for (int i : interval) {
+                System.out.print(i+" ");
+            }
+            System.out.println("");
         }
     }
 
@@ -43,16 +47,16 @@ public class Question_0056 {
         });
         int head = intervals[0][0], tail = intervals[0][1];
         for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] <= intervals[i - 1][1]) {
+            if (intervals[i][0] <= tail) {  //  如果该数组的开头比前面的区域最大值小 则并入前面的区域
                 tail = Math.max(intervals[i][1], tail);
-            } else {
-                list.add(new int[]{head, tail});
+            } else {                        //  否则就把前面的区域塞入结果数组 设置区域的的大小为该数组
+                list.add(new int[]{head, tail});;
                 head = intervals[i][0];
                 tail = intervals[i][1];
             }
         }
         list.add(new int[]{head, tail});
 
-        return (int[][]) list.toArray();
+        return list.toArray(new int[list.size()][]);
     }
 }
