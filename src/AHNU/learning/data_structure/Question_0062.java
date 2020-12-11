@@ -14,7 +14,7 @@ public class Question_0062 {
     public static void main(String[] args) {
         Question_0062 q = new Question_0062();
 
-        System.out.println(q.uniquePaths2(1, 1));
+        System.out.println(q.uniquePaths2(9, 8));
     }
 
     /*尝试使用最朴素自然的想法 运用递归 让机器人优先向右走然后再向下走 到达终点就路径加1
