@@ -38,7 +38,7 @@ public class Question_0070 {
         return dp[n];
     }
 
-    //字节跳动
+    //字节跳动面试题
     public int climbStairsPro(int n) {
         int[][] dp = new int[n + 1][2]; //[i][0] 表示从i-1层走到第i层的解法的数量 [i][1] 表示从i-2层跳到第i层的解法的数量
         dp[0][0] = 1;
