@@ -20,7 +20,7 @@ public class Question_0085 {
     }
 
 
-    // 使用单调栈解法 制作一张表 用于存放该单元格上方连续的为1的矩阵的数量 然后按行执行84题的解法
+    // 使用单调栈解法 制作一张表 用于存放该单元格上方连续的为1的矩阵的数量 然后按行执行84题的解法（将85题划分成为多个84题）
     public int maximalRectangle(char[][] matrix){//(int[] heights) {
         if (matrix.length == 0 || matrix[0].length == 0) return 0;
         int maxArea = 0;
