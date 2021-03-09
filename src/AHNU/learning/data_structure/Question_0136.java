@@ -20,7 +20,7 @@ public class Question_0136 {
         System.out.println(q.singleNumber(nums));
     }
 
-    // 采用HashMap解题
+    // 采用 异或 解题
     public int singleNumber(int[] nums) {
         int result = nums[0];
         for (int i = 1; i < nums.length; i++) {
