@@ -42,18 +42,16 @@ public class Question_0141 {
     public boolean hasCycle(ListNode head) {
         ListNode fast = head;
         ListNode slow = head;
-        boolean flag = false;  // 决定慢指针是否移动的flag
 
-        while (fast != null){
-            fast = fast.next;
+        while (fast != null) {
+            if (fast.next != null) {
+                fast = fast.next.next;
+            }else {
+                return false;
+            }
+            slow = slow.next;
             if (fast == slow) return true;  // 如果快慢指针相遇 说明有环
-
-            if (flag){  // 慢指针两次往前跑一格
-                slow = slow.next;
-                flag = false;
-            }else flag = true;
         }
-
         return false;
     }
 }
