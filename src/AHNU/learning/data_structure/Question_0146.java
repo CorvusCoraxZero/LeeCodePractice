@@ -1,59 +1,75 @@
 package AHNU.learning.data_structure;
 
 /*
-    给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
-    为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。
-    说明：不允许修改给定的链表。
+    运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制 。
+    实现 LRUCache 类：
 
-    进阶：
-        你是否可以使用 O(1) 空间解决此题？
+    LRUCache(int capacity) 以正整数作为容量 capacity 初始化 LRU 缓存
+    int get(int key) 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1 。
+    void put(int key, int value) 如果关键字已经存在，则变更其数据值；如果关键字不存在，则插入该组「关键字-值」。当缓存容量达到上限时，它应该在写入新数据之前删除最久未使用的数据值，从而为新的数据值留出空间。
+    进阶：你是否可以在 O(1) 时间复杂度内完成这两种操作？
 
-    示例 1：
-        输入：head = [3,2,0,-4], pos = 1
-        输出：返回索引为 1 的链表节点
-        解释：链表中有一个环，其尾部连接到第二个节点
-
+    来源：力扣（LeetCode）
+    链接：https://leetcode-cn.com/problems/lru-cache
 */
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 public class Question_0146 {
 
     public static void main(String[] args) {
         Question_0146 q = new Question_0146();
-        ListNode head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5,null)))));
-        ListNode star = head.next.next;
-        head.next.next.next.next.next = star;
-        System.out.println(q.detectCycle(head).val);
+
+        LRUCache lRUCache = new LRUCache(2);
+        lRUCache.put(1, 1); // 缓存是 {1=1}
+        lRUCache.put(2, 2); // 缓存是 {1=1, 2=2}
+        lRUCache.get(1);    // 返回 1
+        lRUCache.put(3, 3); // 该操作会使得关键字 2 作废，缓存是 {1=1, 3=3}
+        lRUCache.get(2);    // 返回 -1 (未找到)
+        lRUCache.put(4, 4); // 该操作会使得关键字 1 作废，缓存是 {4=4, 3=3}
+        lRUCache.get(1);    // 返回 -1 (未找到)
+        lRUCache.get(3);    // 返回 3
+        lRUCache.get(4);    // 返回 4
     }
 
-    // 采用昨天快慢指针的思路 快指针是慢指针速度的两倍 所以快指针会在慢指针入环后第一圈的某个位置与快指针相遇
-    // 设头节点到入环点的位置为a 入环点到快慢指针相遇点的长度为b 剩余环长为c 即环的长度为b+c 设快指针已在环上绕了 n 圈
-    // 又快指针是慢指针速度的两倍  即 a+n(b+c)+b = 2(a+b) -------> a = (n-1)(b+c)+c 即当他们相遇后 从a出发一个快指针会在原始快指针走完剩下的圈长后
-    // 经过(n-1)个整圈 与 后出发的指针在环的入口相遇
-    public ListNode detectCycle(ListNode head) {
-        if (head == null) {
-            return null;
-        }
-        ListNode slow = head, fast = head;
-        while (fast != null) {
-            if (fast.next != null) {
-                /* 虽然这里快指针往前直接走了两步 看似跳了一格 慢指针可能会碰不上 但实际一定会碰上
-                    因为慢指针在中间那一格的情况 只可能是快慢指针重合时的情况
-                    所以做 快慢指针的题 的时候 一定要等快慢指针都走完一轮之后再进行判断 */
-                fast = fast.next.next;
-            } else {
-                return null;
-            }
-            slow = slow.next;
-            if (fast == slow) {
-                ListNode ptr = head;
-                while (ptr != slow) {
-                    ptr = ptr.next;
-                    slow = slow.next;
-                }
-                return ptr;
-            }
-        }
-        return null;
-    }
+
 }
 
+// 使用LinkedHashMap来解题  因为LinkedHashMap既可以做到读写o(1)的时间复杂度 又可以保证有序
+class LRUCache {
+    HashMap<Integer, Integer> map;
+    int capacity;
+
+    public LRUCache(int capacity) {
+        map = new LinkedHashMap<>(capacity);
+        this.capacity = capacity;
+    }
+
+    // 一次get()就是一次访问 为了实现LRU的特性 将每次被访问过的对象移动到链表的尾部 所以头节点的元素就是最久未访问到的元素
+    public int get(int key) {
+        if (map.containsKey(key)){
+            int val = map.get(key); // 获取该元素
+            map.remove(key);    // 移除该元素
+            map.put(key,val);   // 将该元素 移动到链表的尾部
+            return val;
+        }
+        return -1;
+    }
+
+    // 如果超过map的容量就将头节点
+    public void put(int key, int value) {
+        if (map.containsKey(key)){
+            map.remove(key);
+        }
+        if (map.size() < capacity){  // 如果没到预设的容量直接put写入就好了
+            map.put(key,value);
+            return;
+        }else{  // 已经到了预设的容量
+            Iterator<Integer> iterator = map.keySet().iterator();
+            map.remove(iterator.next());
+            map.put(key,value);
+            return;
+        }
+    }
+}
