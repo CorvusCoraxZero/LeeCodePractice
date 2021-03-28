@@ -24,10 +24,7 @@ public class Question_0226 {
 
     public static void main(String[] args) {
         Question_0226 q = new Question_0226();
-        char[][] matrix = new char[][]{{'1', '0', '1', '0', '0'}, {'1', '0', '1', '1', '1'}, {'1', '1', '1', '1', '1'}, {'1', '0', '0', '1', '0'}};
-        char[][] matrix2 = new char[][]{{'0', '1'}};
 
-        System.out.println(q.maximalSquare(matrix2));
     }
 
     // 递归解题
