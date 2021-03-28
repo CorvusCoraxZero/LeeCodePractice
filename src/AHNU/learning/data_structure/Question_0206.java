@@ -19,7 +19,7 @@ public class Question_0206 {
     public static void main(String[] args) {
         Question_0206 q = new Question_0206();
         ListNode head = new ListNode(1,new ListNode(2,new ListNode(3,new ListNode(4,new ListNode(5,null)))));
-        ListNode x = q.reverseListRC(null);
+        ListNode x = q.reverseList3(null);
         while (x != null){
             System.out.println(x.val);
             x = x.next;
@@ -51,6 +51,22 @@ public class Question_0206 {
         head.next.next = head;  // head.next 实际是的一反转部分链表的尾部
         head.next = null;
         return rh;
+    }
+
+    /*
+     * 反转链表 反转head之后的链表 返回反转后链表的头部
+     * */
+    private ListNode reverseList3(ListNode head){
+        if (head == null) return head;
+        ListNode pre = head.next,temp;
+        head.next = null;
+        while (pre != null){
+            temp = pre.next;
+            pre.next = head;
+            head = pre;
+            pre = temp;
+        }
+        return head;
     }
 }
 
