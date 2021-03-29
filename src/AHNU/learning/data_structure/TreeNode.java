@@ -26,6 +26,7 @@ public class TreeNode {
         ArrayDeque<TreeNode> stack = new ArrayDeque<>();
         stack.add(root);
         String n;
+        System.out.println("层次创建二叉树 使用 # 表示 null，使用 - 表示结束： ");
         while (true){
             TreeNode t = stack.pop();
             n = sc.next();
