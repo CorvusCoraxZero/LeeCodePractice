@@ -20,7 +20,7 @@ public class TreeNode {
         this.right = right;
     }
 
-    public static TreeNode getTree(){
+    public static TreeNode getTreeLayer(){
         System.out.println("层次创建二叉树 使用 # 表示 null，使用 - 表示结束： ");
         Scanner sc = new Scanner(System.in);
         TreeNode root = new TreeNode(Integer.parseInt(sc.next()));
@@ -47,6 +47,30 @@ public class TreeNode {
                 t.right = new TreeNode(Integer.parseInt(n));
                 stack.add(t.right);
             }
+        }
+    }
+
+    // 先序遍历创建二叉树
+    public TreeNode getTreeFirst() {
+        System.out.println("线序创建二叉树 数字表示值 null表示空： ");
+        Scanner sc = new Scanner(System.in);
+        String data = sc.nextLine();
+        String[] split = data.split("[' ']+");
+        ArrayList<String> list = new ArrayList<String>(Arrays.asList(split));
+        TreeNode root = createTree(list);
+        return root;
+    }
+
+    private TreeNode createTree(ArrayList list) {
+        if ("null".equals((list.get(0)))) {
+            list.remove(0);
+            return null;
+        } else {
+            int num = Integer.parseInt((String) list.remove(0));
+            TreeNode node = new TreeNode(num);
+            node.left = createTree(list);
+            node.right = createTree(list);
+            return node;
         }
     }
 
