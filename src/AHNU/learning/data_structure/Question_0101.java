@@ -14,7 +14,7 @@ public class Question_0101 {
 
     public static void main(String[] args) {
         Question_0101 q = new Question_0101();
-        System.out.println(q.isSymmetric3(TreeNode.getTree()));
+        System.out.println(q.isSymmetric3(TreeNode.getTreeLayer()));
     }
 
     /**
