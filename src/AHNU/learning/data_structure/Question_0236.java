@@ -17,7 +17,7 @@ public class Question_0236 {
 
     public static void main(String[] args) {
         Question_0236 q = new Question_0236();
-        TreeNode tree = TreeNode.getTree();
+        TreeNode tree = TreeNode.getTreeLayer();
         System.out.println(q.lowestCommonAncestor(tree,new TreeNode(1),new TreeNode(5)).val);
     }
 

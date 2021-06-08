@@ -15,7 +15,7 @@ public class Question_0103 {
 
     public static void main(String[] args) {
         Question_0103 q = new Question_0103();
-        TreeNode tree = TreeNode.getTree();
+        TreeNode tree = TreeNode.getTreeLayer();
         System.out.println(q.maxDepth(tree));
 
     }

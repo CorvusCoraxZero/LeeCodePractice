@@ -11,7 +11,7 @@ public class Question_0102 {
 
     public static void main(String[] args) {
         Question_0102 q = new Question_0102();
-        TreeNode tree = TreeNode.getTree();
+        TreeNode tree = TreeNode.getTreeLayer();
         List<List<Integer>> l = q.levelOrder(tree);
         for (List<Integer> integers : l) {
             for (Integer integer : integers) {

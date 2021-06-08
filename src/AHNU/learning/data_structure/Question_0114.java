@@ -15,7 +15,7 @@ public class Question_0114 {
 
     public static void main(String[] args) {
         Question_0114 q = new Question_0114();
-        TreeNode tree = TreeNode.getTree();
+        TreeNode tree = TreeNode.getTreeLayer();
         q.flatten(tree);
     }
 

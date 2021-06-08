@@ -51,8 +51,8 @@ public class TreeNode {
     }
 
     // 先序遍历创建二叉树
-    public TreeNode getTreeFirst() {
-        System.out.println("线序创建二叉树 数字表示值 null表示空： ");
+    public static TreeNode getTreeFirst() {
+        System.out.println("先序创建二叉树 数字表示值 null表示空： ");
         Scanner sc = new Scanner(System.in);
         String data = sc.nextLine();
         String[] split = data.split("[' ']+");
@@ -61,7 +61,7 @@ public class TreeNode {
         return root;
     }
 
-    private TreeNode createTree(ArrayList list) {
+    private static TreeNode createTree(ArrayList list) {
         if ("null".equals((list.get(0)))) {
             list.remove(0);
             return null;

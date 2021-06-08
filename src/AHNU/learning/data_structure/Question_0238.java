@@ -15,7 +15,7 @@ public class Question_0238 {
 
     public static void main(String[] args) {
         Question_0238 q = new Question_0238();
-        TreeNode tree = TreeNode.getTree();
+        TreeNode tree = TreeNode.getTreeLayer();
     }
 
     /*

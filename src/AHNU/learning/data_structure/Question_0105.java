@@ -14,7 +14,7 @@ public class Question_0105 {
 
     public static void main(String[] args) {
         Question_0105 q = new Question_0105();
-        TreeNode tree = TreeNode.getTree();
+        TreeNode tree = TreeNode.getTreeLayer();
         int[] preorder = new int[]{3,9,20,15,7};
         int[]inorder = new int[]{9,3,15,20,7};
 
