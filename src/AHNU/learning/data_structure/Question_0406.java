@@ -42,7 +42,7 @@ public class Question_0406 {
 
     // 按顺序推算出每一个位置可能的值，因为比选定数字小的数字对选定数字的第二位排序值没有影响，所以当有多个可选的时候选择最小的可选数值。 三层循环 但是还有很大一部分可以进行剪枝
     public int[][] reconstructQueue(int[][] people) {
-        List<int[]> list = Arrays.stream(people).sorted((a, b) -> a[0] != b[0] ? a[0] - b[0] : a[1] - b[1]).collect(Collectors.toList());
+        List<int[]> list = Arrays.stream(people).sorted((a, b) -> a[0] != b[0] ? a[0] - b[0] : b[1] - a[1]).collect(Collectors.toList());
         int[][] result = new int[people.length][people[0].length];
         for (int i = 0; i < people.length; i++) { // i 对应结构数组中的坐标
             for (int l = 0; l < list.size(); l++) {
