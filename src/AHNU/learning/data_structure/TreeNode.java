@@ -21,7 +21,7 @@ public class TreeNode {
     }
 
     public static TreeNode getTreeLayer(){
-        System.out.println("层次创建二叉树 使用 # 表示 null，使用 - 表示结束： ");
+        System.out.println("层次创建二叉树 使用 ! 表示 null，使用 # 表示结束： ");
         Scanner sc = new Scanner(System.in);
         TreeNode root = new TreeNode(Integer.parseInt(sc.next()));
         ArrayDeque<TreeNode> stack = new ArrayDeque<>();
@@ -32,7 +32,7 @@ public class TreeNode {
             n = sc.next();
             if (n.equals("#")){
                 return root;
-            }else if (n.equals("-")){
+            }else if (n.equals("!")){
                 t.left = null;
             }else{
                 t.left = new TreeNode(Integer.parseInt(n));
@@ -41,7 +41,7 @@ public class TreeNode {
             n = sc.next();
             if (n.equals("#")){
                 return root;
-            }else if (n.equals("-")){
+            }else if (n.equals("!")){
                 t.right = null;
             }else{
                 t.right = new TreeNode(Integer.parseInt(n));
