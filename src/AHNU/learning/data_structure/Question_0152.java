@@ -1,22 +1,24 @@
 package AHNU.learning.data_structure;
 
 /*
-    给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。
+    给你一个整数数组 nums，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。
 
     示例 1:
     输入: [2,3,-2,4]
     输出: 6
-    解释: 子数组 [2,3] 有最大乘积 6。
+    解释:子数组 [2,3] 有最大乘积 6。
 
     来源：力扣（LeetCode）
     链接：https://leetcode-cn.com/problems/maximum-product-subarray
 */
 
+import java.util.Arrays;
+
 public class Question_0152 {
 
     public static void main(String[] args) {
         Question_0152 q = new Question_0152();
-        int[] nums = new int[]{-2};
+        int[] nums = new int[]{2,3,-2,4};
         System.out.println(q.maxProduct(nums));
     }
 
@@ -30,10 +32,11 @@ public class Question_0152 {
             dpMax[i] = Math.max(dpMax[i-1]*nums[i],Math.max(dpMin[i-1]*nums[i],nums[i]));
             dpMin[i] = Math.min(dpMax[i-1]*nums[i],Math.min(dpMin[i-1]*nums[i],nums[i]));
         }
-        int result = Integer.MIN_VALUE;
+        /*int result = Integer.MIN_VALUE;
         for (int max : dpMax) {
             if (max > result) result = max;
-        }
+        }*/
+        int result = Arrays.stream(dpMax).max().getAsInt();
         return result;
     }
 }
