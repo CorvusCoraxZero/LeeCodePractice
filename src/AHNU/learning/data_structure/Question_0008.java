@@ -1,66 +1,91 @@
 package AHNU.learning.data_structure;
 
 /*
-    给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
-    如果反转后整数超过 32 位的有符号整数的范围[−231, 231− 1] ，就返回 0。
-    假设环境不允许存储 64 位整数（有符号或无符号）。
+    请你来实现一个myAtoi(string s)函数，使其能将字符串转换成一个 32 位有符号整数（类似 C/C++ 中的 atoi 函数）。
+    函数myAtoi(string s) 的算法如下：
+        读入字符串并丢弃无用的前导空格
+        检查下一个字符（假设还未到字符末尾）为正还是负号，读取该字符（如果有）。 确定最终结果是负数还是正数。 如果两者都不存在，则假定结果为正。
+        读入下一个字符，直到到达下一个非数字字符或到达输入的结尾。字符串的其余部分将被忽略。
+        将前面步骤读入的这些数字转换为整数（即，"123" -> 123， "0032" -> 32）。如果没有读入数字，则整数为 0 。必要时更改符号（从步骤 2 开始）。
+        如果整数数超过 32 位有符号整数范围 [−231, 231− 1] ，需要截断这个整数，使其保持在这个范围内。具体来说，小于 −231 的整数应该被固定为 −231 ，大于 231− 1 的整数应该被固定为 231− 1 。
+        返回整数作为最终结果。
 
-    示例 1：
-        输入：x = 123
-        输出：321
+    注意：
+        本题中的空白字符只包括空格字符 ' ' 。
+        除前导空格或数字后的其余字符串外，请勿忽略 任何其他字符。
 
-    示例 2：
-        输入：x = -123
-        输出：-321
 
-    示例 3：
-        输入：x = 120
-        输出：21
+    示例1：
+        输入：s = "42"
+        输出：42
+        解释：加粗的字符串为已经读入的字符，插入符号是当前读取的字符。
+        第 1 步："42"（当前没有读入字符，因为没有前导空格）
+                 ^
+        第 2 步："42"（当前没有读入字符，因为这里不存在 '-' 或者 '+'）
+                 ^
+        第 3 步："42"（读入 "42"）
+                   ^
+        解析得到整数 42 。
+        由于 "42" 在范围 [-231, 231 - 1] 内，最终结果为 42 。
 
-    示例 4：
-        输入：x = 0
-        输出：0
+    示例2：
+        输入：s = "   -42"
+        输出：-42
+        解释：
+        第 1 步："   -42"（读入前导空格，但忽视掉）
+                    ^
+        第 2 步："   -42"（读入 '-' 字符，所以结果应该是负数）
+                     ^
+        第 3 步："   -42"（读入 "42"）
+                       ^
+        解析得到整数 -42 。
+        由于 "-42" 在范围 [-231, 231 - 1] 内，最终结果为 -42 。
+
+    示例3：
+        输入：s = "4193 with words"
+        输出：4193
+        解释：
+        第 1 步："4193 with words"（当前没有读入字符，因为没有前导空格）
+        第 2 步："4193 with words"（当前没有读入字符，因为这里不存在 '-' 或者 '+'）
+        第 3 步："4193 with words"（读入 "4193"；由于下一个字符不是一个数字，所以读入停止）
+        解析得到整数 4193 。
+        由于 "4193" 在范围 [-231, 231 - 1] 内，最终结果为 4193 。
 
     来源：力扣（LeetCode）
-    链接：https://leetcode.cn/problems/reverse-integer
+    链接：https://leetcode.cn/problems/string-to-integer-atoi
 */
 
-public class Question_0007 {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Question_0008 {
 
     public static void main(String[] args) {
-        Question_0007 q = new Question_0007();
-        int input = 1463847412;
-        System.out.println(q.reverse(input));
+        Question_0008 q = new Question_0008();
+        String input = "  0000000000012345678";
+        System.out.println(q.myAtoi(input));
     }
 
-    public int reverse(int input) {
-        boolean isNegative = false;
-        if (input < 0) {
-            if (input == Integer.MIN_VALUE){
-                return 0;
-            }
-            isNegative = true;
-            input *= -1;
-        }
+    public int myAtoi(String s) {
+        Pattern pattern = Pattern.compile(" *([-|+]?(0*)\\d+).*");
+        Matcher matcher = pattern.matcher(s);
         int result = 0;
-        while (input / 10 > 0) {
-            result = result * 10 + input % 10;
-            input /= 10;
-        }
-        if (result > Integer.MAX_VALUE / 10) {
-            return 0;
-        } else if (result == Integer.MAX_VALUE / 10) {
-            if (isNegative && Math.abs(Integer.MIN_VALUE % 10) < input) {
-                return 0;
-            } else if (!isNegative && Integer.MAX_VALUE % 10 < input) {
-                return 0;
+        if (matcher.matches()){
+            String group = matcher.group(1);
+            String groupZero = matcher.group(2);
+            if (group.length() - groupZero.length() > 11){
+                if (group.charAt(0) == '-'){
+                    return Integer.MIN_VALUE;
+                }else return Integer.MAX_VALUE;
             }
-            result = result * 10 + input % 10;
-        } else {
-            result = result * 10 + input % 10;
-        }
-        if (isNegative) {
-            result *= -1;
+            long l = Long.parseLong(group);
+            if (l > Integer.MAX_VALUE){
+                result = Integer.MAX_VALUE;
+            }else if (l < Integer.MIN_VALUE){
+                result = Integer.MIN_VALUE;
+            }else {
+                result = (int)l;
+            }
         }
         return result;
     }
