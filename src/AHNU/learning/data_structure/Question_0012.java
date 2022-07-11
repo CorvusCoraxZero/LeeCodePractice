@@ -1,87 +1,86 @@
 package AHNU.learning.data_structure;
 
 /*
-给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，
-使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
+    罗马数字包含以下七种字符：I，V，X，L，C，D和M。
 
-注意：答案中不可以包含重复的三元组。
+    字符          数值
+    I             1
+    V             5
+    X             10
+    L             50
+    C             100
+    D             500
+    M             1000
 
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/3sum
+    例如， 罗马数字 2 写做II，即为两个并列的 1。12 写做XII，即为X+II。 27 写做XXVII, 即为XX+V+II。
+    通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做IIII，而是IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为IX。这个特殊的规则只适用于以下六种情况：
 
+    I可以放在V(5) 和X(10) 的左边，来表示 4 和 9。
+    X可以放在L(50) 和C(100) 的左边，来表示 40 和90。
+    C可以放在D(500) 和M(1000) 的左边，来表示400 和900。
+    给你一个整数，将其转为罗马数字。
+    
+    示例1:
+        输入:num = 3
+        输出: "III"
+
+    示例2:
+        输入:num = 4
+        输出: "IV"
+
+    示例3:
+        输入:num = 9
+        输出: "IX"
+
+    示例4:
+        输入:num = 58
+        输出: "LVIII"
+        解释: L = 50, V = 5, III = 3.
+
+    示例5:
+        输入:num = 1994
+        输出: "MCMXCIV"
+        解释: M = 1000, CM = 900, XC = 90, IV = 4.
+
+    来源：力扣（LeetCode）
+    链接：https://leetcode.cn/problems/integer-to-roman
 */
 
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 public class Question_0012 {
 
     public static void main(String[] args) {
-        int[] nums = {-1,0,1,2,-1,-4,-2,-3,3,0,4};
-//                     0  1  2  3   4   5  6  7  8
         Question_0012 q = new Question_0012();
-
-        List<List<Integer>> result = q.ThreeSum2(nums);
-        for (List<Integer> list : result) {
-            for (Integer integer : list) {
-                System.out.printf("%3d", integer);
-            }
-            System.out.println();
-        }
-
+        int input = 58;
+        System.out.println(q.intToRoman(58));
     }
 
-    //hashmap + 双循环 但是判重困难 判重部分暂无头绪
-    public List<List<Integer>> ThreeSum(int[] nums) {
-        HashMap<Integer, Integer> map = new HashMap<>();
-        ArrayList<List<Integer>> list = new ArrayList<>();
-        int target;
-        for (int x = 0; x < nums.length; x++) {
-            target = nums[x];
-            for (int i = 0; i < nums.length; i++) {
-                if (i == x) continue;
-                if (map.containsKey(-(nums[i] + target))) {
-                    ArrayList<Integer> result = new ArrayList<>();
-                    result.add(i);
-                    result.add(map.get(-(nums[i] + target)));
-                    result.add(x);
-                    list.add(result);
-                }
-                map.put(nums[i], i);
+    public String intToRoman(int num) {
+        TreeMap<Integer, String> map = new TreeMap<>((a,b) -> b-a);
+        map.put(1,"I");
+        map.put(5,"V");
+        map.put(10,"X");
+        map.put(50,"L");
+        map.put(100,"C");
+        map.put(500,"D");
+        map.put(1000,"M");
+        map.put(4,"IV");
+        map.put(9,"IX");
+        map.put(40,"XL");
+        map.put(90,"XC");
+        map.put(400,"CD");
+        map.put(900,"CM");
+        StringBuilder sb = new StringBuilder();
+
+        for (Integer integer : map.keySet()) {
+            while (num >= integer){
+                sb.append(map.get(integer));
+                num -= integer;
             }
         }
-        return list;
-    }
-
-    //采用排序+双指针的方法即可避免了重复的同时保证了时间复杂度
-    public List<List<Integer>> ThreeSum2(int[] nums) {
-        List<List<Integer>> list = new ArrayList<>();
-        if (nums.length < 3) return list; // 如果没有解答 题目要求输出一个空列表 null不行
-        Arrays.sort(nums);
-        for (int i = 0; i < nums.length; i++) {
-            if (i == 0 || nums[i] != nums[i - 1]) { // 排序后 下一个数和前一个数不相等 才进入循环
-                int a = i + 1, b = nums.length - 1;
-                while (a < b) {
-                    if (a == i + 1 || b == nums.length - 1 || nums[a] > nums[a - 1] && nums[b] < nums[b + 1]) {
-                        if (nums[a] + nums[b] + nums[i] == 0) {
-                            list.add(new ArrayList<Integer>(Arrays.asList(new Integer[]{nums[i], nums[a], nums[b]})));
-                            a++;
-                            b--;
-                        } else if (nums[a] + nums[b] + nums[i] > 0) {
-                            b--;
-                        } else {
-                            a++;
-                        }
-                    } else if (nums[a] <= nums[a - 1]) {
-                        a++;
-                    } else if (nums[b] >= nums[b + 1]) {
-                        b--;
-                    }
-
-                }
-            }
-        }
-        return list;
+        return sb.toString();
     }
 }
