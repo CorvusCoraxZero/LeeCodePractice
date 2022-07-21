@@ -1,71 +1,77 @@
 package AHNU.learning.data_structure;
 
 /*
-    给定一个只包含 '(' 和 ')' 的字符串，找出最长的包含有效括号的子串的长度。
+    38. 外观数列
+    给定一个正整数 n ，输出外观数列的第 n 项。
+    「外观数列」是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。
+    你可以将其视作是由递归公式定义的数字字符串序列：
 
-    输入: "(()"
-    输出: 2
-    解释: 最长有效括号子串为 "()"
-    示例 2:
+    countAndSay(1) = "1"
+    countAndSay(n) 是对 countAndSay(n-1) 的描述，然后转换成另一个数字字符串。
+    前五项如下：
+    1.     1
+    2.     11
+    3.     21
+    4.     1211
+    5.     111221
+    第一项是数字 1
+    描述前一项，这个数是 1 即 “ 一 个 1 ”，记作 "11"
+    描述前一项，这个数是 11 即 “ 二 个 1 ” ，记作 "21"
+    描述前一项，这个数是 21 即 “ 一 个 2 + 一 个 1 ” ，记作 "1211"
+    描述前一项，这个数是 1211 即 “ 一 个 1 + 一 个 2 + 二 个 1 ” ，记作 "111221"
 
-    输入: ")()())"
-    输出: 4
-    解释: 最长有效括号子串为 "()()"
+    要描述一个数字字符串，首先要将字符串分割为最小数量的组，每个组都由连续的最多 相同字符 组成。然后对于每个组，先描述字符的数量，然后描述
+    字符，形成一个描述组。要将描述转换为数字字符串，先将每组中的字符数量用数字替换，再将所有描述组连接起来。
+
+    示例 1：
+        输入：n = 1
+        输出："1"
+        解释：这是一个基本样例。
+
+    示例 2：
+        输入：n = 4
+        输出："1211"
+    解释：
+        countAndSay(1) = "1"
+        countAndSay(2) = 读 "1" = 一 个 1 = "11"
+        countAndSay(3) = 读 "11" = 二 个 1 = "21"
+        countAndSay(4) = 读 "21" = 一 个 2 + 一 个 1 = "12" + "11" = "1211"
+
+    提示：
+        1 <= n <= 30
 
     来源：力扣（LeetCode）
-    链接：https://leetcode-cn.com/problems/longest-valid-parentheses
+    链接：https://leetcode.cn/problems/count-and-say
 */
 
-import java.util.Arrays;
-
-public class Question_0032 {
+public class Question_0038 {
 
     public static void main(String[] args) {
-        Question_0032 q = new Question_0032();
-        String str = "()(())";
-        System.out.println(q.longestValidParentheses(str));
+        Question_0038 q = new Question_0038();
+        int input = 4;
+        System.out.println(q.countAndSay(input));
 
     }
 
-    // 使用动态规划的思想来解题 时间复杂度O(n) 空间复杂度O(n)
-    /*
-    s[i] = \text{‘)’}s[i]=‘)’ 且 s[i - 1] = \text{‘(’}s[i−1]=‘(’，也就是字符串形如 “……()”“……()”，我们可以推出：
+    public String countAndSay(int n) {
+        String pre = "1";
+        StringBuilder now = new StringBuilder();
 
-    \textit{dp}[i]=\textit{dp}[i-2]+2
-    dp[i]=dp[i−2]+2
-
-    我们可以进行这样的转移，是因为结束部分的 "()" 是一个有效子字符串，并且将之前有效子字符串的长度增加了 22 。
-
-    s[i] = \text{‘)’}s[i]=‘)’ 且 s[i - 1] = \text{‘)’}s[i−1]=‘)’，也就是字符串形如 “……))”“……))”，我们可以推出：
-    如果 s[i - \textit{dp}[i - 1] - 1] = \text{‘(’}s[i−dp[i−1]−1]=‘(’，那么
-
-    \textit{dp}[i]=\textit{dp}[i-1]+\textit{dp}[i-\textit{dp}[i-1]-2]+2
-    dp[i]=dp[i−1]+dp[i−dp[i−1]−2]+2
-
-    作者：LeetCode-Solution
-    链接：https://leetcode-cn.com/problems/longest-valid-parentheses/solution/zui-chang-you-xiao-gua-hao-by-leetcode-solution/
-    来源：力扣（LeetCode）
-    */
-    public int longestValidParentheses(String s) {
-        int[] dp = new int[s.length() + 1];
-        dp[0] = 0;
-        int maxlength = dp[0];
-        for (int i = 0; i < s.length(); i++) {
-            try{ // 会存在连续的))))))往回找的时候数组下标越界
-                if (i != 0 && s.charAt(i) == ')' && s.charAt(i - 1) == '(' ) {
-                    dp[i + 1] = dp[i - 1] + 2;
-                } else if (i != 0 && s.charAt(i) == ')' && s.charAt(i - dp[i] - 1) == '(' && s.charAt(i - 1) == ')') {
-                    dp[i + 1] = dp[i] + dp[i - dp[i] - 1] + 2;
+        int count = 0;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < pre.length(); j++) {
+                count++;
+                if (j + 1 > pre.length() - 1 || pre.charAt(j + 1) != pre.charAt(j)) {
+                    now.append(count);
+                    now.append(pre.charAt(j));
+                    count = 0;
                 }
-                if (dp[i + 1] > maxlength) {
-                    maxlength = dp[i + 1];
-                }
-            }catch (Exception e){
-                System.out.println("Something wrong");
-                dp[i + 1] = 0;
             }
+            pre = now.toString();
+            now = new StringBuilder();
         }
-        return maxlength;
+
+        return pre;
     }
 
 }
