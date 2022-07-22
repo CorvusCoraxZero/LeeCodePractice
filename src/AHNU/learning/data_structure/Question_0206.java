@@ -14,6 +14,8 @@ package AHNU.learning.data_structure;
     链接：https://leetcode-cn.com/problems/reverse-linked-list
 */
 
+import AHNU.learning.data_structure.entity.ListNode;
+
 public class Question_0206 {
 
     public static void main(String[] args) {

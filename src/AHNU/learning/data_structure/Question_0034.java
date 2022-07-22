@@ -9,6 +9,8 @@ package AHNU.learning.data_structure;
     链接：https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array
 */
 
+import AHNU.learning.data_structure.entity.Util;
+
 public class Question_0034 {
 
     public static void main(String[] args) {

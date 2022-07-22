@@ -12,8 +12,10 @@ package AHNU.learning.data_structure;
     链接：https://leetcode-cn.com/problems/merge-k-sorted-lists
 */
 
+import AHNU.learning.data_structure.entity.ListNode;
+import AHNU.learning.data_structure.entity.Util;
+
 import java.util.Comparator;
-import java.util.List;
 import java.util.PriorityQueue;
 
 public class Question_0023 {

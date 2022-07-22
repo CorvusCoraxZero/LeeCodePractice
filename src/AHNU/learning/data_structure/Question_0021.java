@@ -11,6 +11,8 @@ package AHNU.learning.data_structure;
 */
 
 
+import AHNU.learning.data_structure.entity.ListNode;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

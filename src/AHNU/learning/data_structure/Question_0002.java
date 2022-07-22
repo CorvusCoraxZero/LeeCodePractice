@@ -12,10 +12,13 @@ package AHNU.learning.data_structure;
     链接：https://leetcode-cn.com/problems/add-two-numbers
 */
 
+import AHNU.learning.data_structure.entity.ListNode;
+
 import java.util.Scanner;
 
 public class Question_0002 {
 
+    public final int aa = 123;
     public static void main(String[] args) {
         ListNode l1 = new ListNode(0);
         ListNode l2 = new ListNode(0);
@@ -56,6 +59,9 @@ public class Question_0002 {
             System.out.println(result.val);
             result = result.next;
         }
+        ThreadLocal local = new ThreadLocal();
+        local.set("String");
+
     }
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -91,22 +97,5 @@ public class Question_0002 {
             index.val = 1;
         }else pre.next = null;
         return result;
-    }
-}
-
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode() {
-    }
-
-    ListNode(int val) {
-        this.val = val;
-    }
-
-    ListNode(int val, ListNode next) {
-        this.val = val;
-        this.next = next;
     }
 }

@@ -17,6 +17,8 @@ package AHNU.learning.data_structure;
     链接：https://leetcode-cn.com/problems/palindrome-linked-list
 */
 
+import AHNU.learning.data_structure.entity.ListNode;
+
 public class Question_0234 {
 
     public static void main(String[] args) {

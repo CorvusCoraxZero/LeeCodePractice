@@ -15,6 +15,8 @@ package AHNU.learning.data_structure;
 
 */
 
+import AHNU.learning.data_structure.entity.ListNode;
+
 public class Question_0142 {
 
     public static void main(String[] args) {

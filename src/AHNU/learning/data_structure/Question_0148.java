@@ -1,10 +1,12 @@
 package AHNU.learning.data_structure;
 
 /*
-    给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。
+    给你链表的头结点head，请将其按 升序 排列并返回 排序后的链表 。
     进阶：
-        你可以在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序吗？
+        你可以在O(nlogn) 时间复杂度和常数级空间复杂度下，对链表进行排序吗？
 */
+
+import AHNU.learning.data_structure.entity.ListNode;
 
 public class Question_0148 {
 
@@ -47,7 +49,7 @@ public class Question_0148 {
         return merge(sortList(head),sortList(fast));
     }
 
-    private ListNode merge(ListNode head1,ListNode head2){  // 合并有序链表的操作;
+    private ListNode merge(ListNode head1, ListNode head2){  // 合并有序链表的操作;
         ListNode dummyHead = new ListNode(0);
         ListNode temp = dummyHead,temp1 = head1, temp2 = head2;
         while (temp1 != null && temp2 != null){

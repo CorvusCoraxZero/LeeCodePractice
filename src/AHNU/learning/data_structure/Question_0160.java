@@ -14,6 +14,8 @@ package AHNU.learning.data_structure;
     链接：https://leetcode-cn.com/problems/intersection-of-two-linked-lists
 */
 
+import AHNU.learning.data_structure.entity.ListNode;
+
 public class Question_0160 {
 
     public static void main(String[] args) {
