@@ -1,13 +1,27 @@
 package AHNU.learning.data_structure;
 
 /*
-    给定一个二叉树，找出其最大深度。
+    给你二叉树的根节点 root ，返回其节点值的 锯齿形层序遍历 。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
 
-    二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+    示例 1：
+        输入：root = [3,9,20,null,null,15,7]
+        输出：[[3],[20,9],[15,7]]
 
-    说明: 叶子节点是指没有子节点的节点。
+    示例 2：
+        输入：root = [1]
+        输出：[[1]]
+
+    示例 3：
+        输入：root = []
+        输出：[]
+
+    提示：
+    树中节点数目在范围 [0, 2000] 内
+    -100 <= Node.val <= 100
+
+    来源：力扣（LeetCode）
+    链接：https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal
 */
-
 
 import java.util.*;
 
@@ -15,43 +29,48 @@ public class Question_0103 {
 
     public static void main(String[] args) {
         Question_0103 q = new Question_0103();
-        TreeNode tree = TreeNode.getTreeLayer();
-        System.out.println(q.maxDepth(tree));
+        TreeNode treeNode = TreeNode.getTreeLayer();
+        for (List<Integer> list : q.zigzagLevelOrder(treeNode)) {
+            for (Integer integer : list) {
+                System.out.println(integer + " ");
+            }
+            System.out.println(" ");
+        }
+
 
     }
 
-    /**
-     * 递归解法 用栈记录每一层的数据
-     *
-     * @param root
-     * @return
-     */
-    public int maxDepth(TreeNode root) {
-        ArrayDeque<TreeNode> stack = new ArrayDeque<>();
-        List<List<Integer>> list = new ArrayList<>();
-        if (root != null) {
-            stack.add(root);
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans = new LinkedList<List<Integer>>();
+        if (root == null) {
+            return ans;
         }
-        return levelOrderRe(stack, list);
-    }
+        Queue<TreeNode> nodeQueue = new ArrayDeque<TreeNode>();
+        nodeQueue.offer(root);
+        boolean isOrderLeft = true;
 
-    public int levelOrderRe(ArrayDeque<TreeNode> stackP, List<List<Integer>> list) {
-        if (stackP.isEmpty()) {
-            return 0;
-        }
-        List<Integer> layer = new ArrayList<>();
-        ArrayDeque<TreeNode> stack = new ArrayDeque<>();
-        while (!stackP.isEmpty()) {
-            TreeNode node = stackP.pop();
-            layer.add(node.val);
-            if (node.left != null) {
-                stack.add(node.left);
+        while (!nodeQueue.isEmpty()) {
+            Deque<Integer> levelList = new LinkedList<Integer>();
+            int size = nodeQueue.size();
+            for (int i = 0; i < size; ++i) {
+                TreeNode curNode = nodeQueue.poll();
+                if (isOrderLeft) {
+                    levelList.offerLast(curNode.val);
+                } else {
+                    levelList.offerFirst(curNode.val);
+                }
+                if (curNode.left != null) {
+                    nodeQueue.offer(curNode.left);
+                }
+                if (curNode.right != null) {
+                    nodeQueue.offer(curNode.right);
+                }
             }
-            if (node.right != null) {
-                stack.add(node.right);
-            }
+            ans.add(new LinkedList<Integer>(levelList));
+            isOrderLeft = !isOrderLeft;
         }
-        list.add(layer);
-        return levelOrderRe(stack, list) + 1;
+
+        return ans;
     }
 }
+

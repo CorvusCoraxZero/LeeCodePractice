@@ -50,6 +50,38 @@ public class TreeNode {
         }
     }
 
+    // 郭佳鑫_TODO 2022/8/13 : 通过leecode的方法创建
+    // 返回层次遍历创建的二叉树
+    public static TreeNode getTreeLayer(String input){
+        System.out.println("层次创建二叉树 使用 ! 表示 null，使用 # 表示结束： ");
+        Scanner sc = new Scanner(System.in);
+        TreeNode root = new TreeNode(Integer.parseInt(sc.next()));
+        ArrayDeque<TreeNode> stack = new ArrayDeque<>();
+        stack.add(root);
+        String n;
+        while (true){
+            TreeNode t = stack.pop();
+            n = sc.next();
+            if (n.equals("#")){
+                return root;
+            }else if (n.equals("!")){
+                t.left = null;
+            }else{
+                t.left = new TreeNode(Integer.parseInt(n));
+                stack.add(t.left);
+            }
+            n = sc.next();
+            if (n.equals("#")){
+                return root;
+            }else if (n.equals("!")){
+                t.right = null;
+            }else{
+                t.right = new TreeNode(Integer.parseInt(n));
+                stack.add(t.right);
+            }
+        }
+    }
+
     // 先序遍历创建二叉树
     public static TreeNode getTreeFirst() {
         System.out.println("先序创建二叉树 数字表示值 null表示空： ");
